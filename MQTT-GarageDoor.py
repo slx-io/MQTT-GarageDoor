@@ -1,5 +1,4 @@
 #%%
-from email.errors import CloseBoundaryNotFoundDefect
 import paho.mqtt.client as mqtt
 import RPi.GPIO
 import time
