@@ -55,3 +55,8 @@ cover:
     optimistic: false
     retain: true
 ```
+
+# To Do
+- [ ] Better Code Documentation
+- [ ] Code Consistency
+- [ ] Replace debug code with proper logging
