@@ -55,15 +55,14 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     global doorState
     print("Received {}, {}, {}, {}".format(msg.topic, msg.payload, msg.qos, msg.retain))
-    if (((doorState != DOORSTATE_OPENING) and (doorState != DOORSTATE_CLOSING)) and (msg.payload == MQTT_PAYLOAD_TRIGGERCMD_STOP)):
-        print("Ignoring")
-        client.publish(MQTT_CMD_STATUS, MQTT_STATUS[doorState])
-    elif ((msg.payload == MQTT_PAYLOAD_TRIGGERCMD_OPEN) or (msg.payload == MQTT_PAYLOAD_TRIGGERCMD_CLOSE) or (msg.payload == MQTT_PAYLOAD_TRIGGERCMD_STOP)):
+    if ((msg.payload == MQTT_PAYLOAD_TRIGGERCMD_OPEN) or (msg.payload == MQTT_PAYLOAD_TRIGGERCMD_CLOSE) or (msg.payload == MQTT_PAYLOAD_TRIGGERCMD_STOP)):
         doorState = check_door_state()
         RPi.GPIO.output(6,0)
         time.sleep(0.1)
         RPi.GPIO.output(6,1)
-        if doorState == DOORSTATE_CLOSED or doorState == DOORSTATE_STOPPED_WHILE_CLOSING:
+        if (((doorState != DOORSTATE_OPENING) and (doorState != DOORSTATE_CLOSING)) and (msg.payload == MQTT_PAYLOAD_TRIGGERCMD_STOP)):
+            doorState = DOORSTATE_UNKNOWN
+        elif doorState == DOORSTATE_CLOSED or doorState == DOORSTATE_STOPPED_WHILE_CLOSING:
             doorState = DOORSTATE_OPENING
         elif doorState == DOORSTATE_OPENING:
             doorState = DOORSTATE_STOPPED_WHILE_OPENING
