@@ -1,3 +1,4 @@
+#%%
 import paho.mqtt.client as mqtt
 import RPi.GPIO
 import time
@@ -6,6 +7,10 @@ import time
 RPi.GPIO.setmode(RPi.GPIO.BCM)
 RPi.GPIO.setup(6,RPi.GPIO.OUT)
 RPi.GPIO.output(6,1)
+RPi.GPIO.setup(23, RPi.GPIO.IN, pull_up_down=RPi.GPIO.PUD_UP)
+RPi.GPIO.setup(24, RPi.GPIO.IN, pull_up_down=RPi.GPIO.PUD_UP)
+
+#%%
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
