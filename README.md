@@ -1,5 +1,5 @@
 # Home Assistant Control of Garage Door via MQTT
-I want to control my Garage Door using a relay module and Raspberry Pi.
+I want to control my Garage Door using Home Assistant. I have a garage door controller with a button, a relay module and Raspberry Pi.
 
 I found Remote GPIO to be overly simplistic and problematic. I found that the relay would trigger when Home Assistant would first connect to the Raspberry Pi (thus opening the door - not desirable), plus it wouldn't handle disconnections/reconnections at all.
 
